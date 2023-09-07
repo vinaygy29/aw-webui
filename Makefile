@@ -19,7 +19,7 @@ static/logo.%: media/logo/logo.%
 	cp $< $@
 
 install:
-	npm ci
+	npm install
 
 uninstall:
 	rm -r node_modules/
