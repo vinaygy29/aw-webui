@@ -2,6 +2,7 @@
 
 .FORCE: ;
 
+#remove this line
 # This is to disable check for new release in aw-webui for aw-android
 ifdef ON_ANDROID
 # The following flag will pass --android as a command line argument to vue-cli-service
