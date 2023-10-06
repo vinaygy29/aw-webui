@@ -1,16 +1,16 @@
 <template lang="pug">
-div#wrapper
-  aw-header
+  div#wrapper
+    <aw-header v-if="token"></aw-header>
 
-  div(:class="{'container': !fullContainer, 'container-fluid': fullContainer}").px-0.px-md-2
-    div.aw-container.my-3.p-3
-      error-boundary
-        user-satisfaction-poll
-        new-release-notification(v-if="isNewReleaseCheckEnabled")
-        router-view
+    div(:class="{'container': !fullContainer, 'container-fluid': fullContainer}").px-0.px-md-2
+      div.aw-container.my-3.p-3
+        error-boundary
+          user-satisfaction-poll
+          new-release-notification(v-if="isNewReleaseCheckEnabled")
+          router-view
 
-  aw-footer
-</template>
+    aw-footer
+  </template>
 
 <script>
 import { useSettingsStore } from '~/stores/settings';
@@ -21,6 +21,7 @@ export default {
     return {
       activityViews: [],
       isNewReleaseCheckEnabled: !process.env.VUE_APP_ON_ANDROID,
+      token: localStorage.getItem('token'),
     };
   },
 
@@ -53,6 +54,9 @@ export default {
 
     const serverStore = useServerStore();
     await serverStore.getInfo();
+  },
+  updated() {
+    this.token = localStorage.getItem('token');
   },
 };
 </script>

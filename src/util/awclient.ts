@@ -1,6 +1,7 @@
 import { AWClient } from 'aw-client';
 
 import { useSettingsStore } from '~/stores/settings';
+import Axios from 'axios';
 
 let _client: AWClient | null;
 
@@ -13,7 +14,7 @@ export function createClient(force?: boolean): AWClient {
   // Works since CORS is enabled by default when running `aw-server --testing`.
   if (!production) {
     const aw_server_url = typeof AW_SERVER_URL !== 'undefined' && AW_SERVER_URL;
-    baseURL = aw_server_url || 'http://127.0.0.1:5666';
+    baseURL = aw_server_url || 'http://127.0.0.1:5600';
   }
 
   if (!_client || force) {
@@ -22,6 +23,19 @@ export function createClient(force?: boolean): AWClient {
       baseURL,
       timeout: 1000 * useSettingsStore().requestTimeout,
     });
+    _client.req.interceptors.request.use(
+      config => {
+        const token = 'token';
+        if (token) {
+          config.headers['Authorization'] = localStorage.getItem('token');
+        }
+        // config.headers['Content-Type'] = 'application/json';
+        return config;
+      },
+      error => {
+        Promise.reject(error);
+      }
+    )
   } else {
     throw 'Tried to instantiate global AWClient twice!';
   }

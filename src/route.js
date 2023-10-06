@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
+const Login = () => import('./views/Login.vue');
+const Signup = () => import('./views/Signup.vue');
 const Home = () => import('./views/Home.vue');
 
 // Activity views for desktop
@@ -30,8 +32,16 @@ const router = new VueRouter({
     {
       path: '/',
       redirect: _to => {
-        return localStorage.landingpage || '/home';
+        return localStorage.validLogin === true ? '/home' : '/login';
       },
+    },
+    {
+      path: '/login',
+      component: Login,
+    },
+    {
+      path: '/signup',
+      component: Signup,
     },
     { path: '/home', component: Home },
     {
@@ -75,6 +85,19 @@ const router = new VueRouter({
       component: NotFound,
     },
   ],
+});
+
+// Navigation guard to check for the presence of a token
+router.beforeEach((to, from, next) => {
+  const token = localStorage.getItem('token'); // You can change this to your token storage mechanism
+  // Check if the route requires authentication and the token is not present
+  if (!token && to.path !== '/login' && to.path !== '/signup') {
+    // Redirect to the login page
+    window.location.replace('/');
+  } else {
+    // Continue with the navigation
+    next();
+  }
 });
 
 export default router;
