@@ -2,14 +2,38 @@
   <div id="signup">
     <h1>Signup</h1>
     <div class="form-inputs">
-      <label for="username">Username</label>
+      <label for="firstName">Comapny</label>
       <input
         id="username"
-        v-model="input.username"
+        v-model="input.company"
         type="text"
-        name="username"
-        placeholder="Username"
+        name="company"
+        placeholder="Company"
       />
+    </div>
+    <div class="form-inputs">
+      <label for="firstName">First name</label>
+      <input
+        id="username"
+        v-model="input.firstName"
+        type="text"
+        name="firstName"
+        placeholder="First name"
+      />
+    </div>
+    <div class="form-inputs">
+      <label for="lastName">Last name</label>
+      <input
+        id="username"
+        v-model="input.lastName"
+        type="text"
+        name="lastName"
+        placeholder="Last name"
+      />
+    </div>
+    <div class="form-inputs">
+      <label for="email">Email</label>
+      <input id="username" v-model="input.email" type="text" name="email" placeholder="Email" />
     </div>
     <div class="form-inputs">
       <label for="password">Password</label>
@@ -32,7 +56,10 @@ export default {
   data() {
     return {
       input: {
-        username: '',
+        company: '',
+        firstname: '',
+        lastname: '',
+        email: '',
         password: '',
       },
     };
@@ -50,7 +77,10 @@ export default {
 
         // Create an object with the request data (username and password)
         const requestData = {
-          user_name: this.input.username, // Replace with the actual username
+          company: this.input.company,
+          firstName: this.input.firstName,
+          lastName: this.input.lastName,
+          email: this.input.email, // Replace with the actual username
           password: this.input.password, // Replace with the actual password
         };
 

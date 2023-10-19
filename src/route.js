@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 
 const Login = () => import('./views/Login.vue');
+const LoginByRalvie = () => import('./views/LoginByRalvie.vue');
 const Signup = () => import('./views/Signup.vue');
 const Home = () => import('./views/Home.vue');
 
@@ -38,6 +39,10 @@ const router = new VueRouter({
     {
       path: '/login',
       component: Login,
+    },
+    {
+      path: '/login_ralvie',
+      component: LoginByRalvie,
     },
     {
       path: '/signup',
@@ -91,7 +96,7 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem('token'); // You can change this to your token storage mechanism
   // Check if the route requires authentication and the token is not present
-  if (!token && to.path !== '/login' && to.path !== '/signup') {
+  if (!token && to.path !== '/login' && to.path !== '/signup' && to.path !== '/login_ralvie') {
     // Redirect to the login page
     window.location.replace('/');
   } else {

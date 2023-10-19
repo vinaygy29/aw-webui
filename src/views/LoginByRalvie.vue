@@ -1,8 +1,8 @@
 <template>
   <div id="login">
-    <h1>Login</h1>
+    <h1>Login with Ralvie</h1>
     <div class="form-inputs">
-      <label for="username">System Username</label>
+      <label for="username">Ralive Username</label>
       <input
         id="username"
         v-model="input.username"
@@ -12,7 +12,7 @@
       />
     </div>
     <div class="form-inputs">
-      <label for="password">System Password</label>
+      <label for="password">Ralvie Password</label>
       <input
         id="password"
         v-model="input.password"
@@ -22,8 +22,7 @@
       />
     </div>
     <button type="button" @click="login()">Login</button><br />
-    <a type="button" @click="$router.replace('/signup')">Don not have an account? Signup</a><br />
-    <a type="button" @click="$router.replace('/login_ralvie')">Login with Ralvie AI</a>
+    <a type="button" @click="$router.replace('/signup')">Don not have an account? Signup</a>
   </div>
 </template>
 
@@ -42,44 +41,16 @@ export default {
   created() {
     localStorage.removeItem('token');
   },
-  beforeMount() {
-    this.checkUser();
-  },
   methods: {
-    checkUser() {
-      const apiUrl = 'http://127.0.0.1:5600/api/0/login'; // Adjust the URL as needed
-
-      // Define the options for the fetch POST request
-      const requestOptions = {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      };
-
-      // Make the POST request to the API
-      fetch(apiUrl, requestOptions)
-        .then(response => {
-          if (!response.ok) {
-            if (response.status === 401) {
-              this.$router.replace('/login_ralvie');
-            }
-          }
-          return response.json(); // Parse the response JSON
-        })
-        .catch(error => {
-          console.error('There was a problem with the fetch operation:', error);
-        });
-    },
     login() {
       if (this.input.username != '' && this.input.password != '') {
         // This should actually be an api call not a check against this.$parent.mockAccount
         // Define the URL of your API endpoint
-        const apiUrl = 'http://127.0.0.1:5600/api/0/login'; // Adjust the URL as needed
+        const apiUrl = 'http://127.0.0.1:5600/api/0/ralvie/login'; // Adjust the URL as needed
 
         // Create an object with the request data (username and password)
         const requestData = {
-          user_name: this.input.username, // Replace with the actual username
+          userName: this.input.username, // Replace with the actual username
           password: this.input.password, // Replace with the actual password
         };
 
